@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@import "tailwindcss-animated";
+
+:root {
+  --primary-color: rgb(175 0 255);
+  --secondary-color: rgb(175 0 175);
+  --accent-color: rgb(0 175 255);
+}
+
+@layer components {
+  .container {
+    @apply max-w-6xl mx-auto px-6;
+  }
+  .NavBar {
+    @apply flex flex-nowrap justify-between items-center p-5 border-b border-slate-500 shadow-lg shadow-slate-500/50;
+  }
+
+  .NavBarLogo {
+    @apply border border-solid border-current px-4 py-2 text-2xl md:text-7xl font-bold;
+  }
+
+  .NavBarLinks {
+    @apply flex flex-nowrap gap-4 items-center;
+  }
+
+  .NavBarHamburger {
+    @apply flex flex-col justify-center gap-1.5 rounded p-2 active:bg-slate-200;
+  }
+
+  .NavBarHamburgerLine {
+    @apply h-0.5 w-6 bg-current;
+  }
+
+  .NavBarDrawerBackdrop {
+    @apply fixed inset-0 z-10 bg-black/40 opacity-0 transition-opacity duration-200 md:hidden;
+  }
+
+  .NavBarDrawerBackdropOpen {
+    @apply opacity-100;
+  }
+
+  .NavBarDrawer {
+    @apply fixed inset-y-0 left-0 z-100 flex w-72 max-w-[85vw] flex-col border-r border-slate-300 bg-white shadow-xl transition-transform duration-200 ease-out md:hidden;
+    transform: translateX(-100%);
+  }
+
+  .NavBarDrawerOpen {
+    transform: translateX(0);
+  }
+
+  .NavBarDrawerHeader {
+    @apply flex items-center justify-between border-b border-slate-200 p-4;
+  }
+
+  .NavBarDrawerLogo {
+    @apply block text-2xl md:text-7xl;
+  }
+
+  .NavBarDrawerClose {
+    @apply text-3xl leading-none text-slate-600 hover:text-black;
+  }
+
+  .NavBarDrawerLinks {
+    @apply flex flex-col gap-2 p-4;
+  }
+
+  .NavItem {
+    @apply text-lg md:text-2xl font-bold underline decoration-(--secondary-color);
+  }
+
+  .ContactLink{
+    @apply text-2xl md:text-3xl font-semibold text-slate-900 hover:text-blue-600 transition-colors break-all;
+  }
+
+  .ConsoleBox{
+    @apply shadow-lg shadow-slate-400/75 flex flex-col border-10 border-double border-(--secondary-color)/35 rounded-lg p-4 gap-10 col-span-2;
+  }
+}
+
+.text-outline-black {
+  -webkit-text-stroke: 2px black;
+  color: var(--primary-color);
+}
+
+#nprogress .bar {
+  background: var(--primary-color) !important; 
+  height: 8px !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 20px var(--primary-color), 0 0 5px var(--primary-color) !important;
+}
+
+#nprogress .spinner-icon {
+  width: 40px !important;   
+  height: 40px !important;  
+  border-width: 4px !important; 
+  border-top-color: var(--primary-color) !important;
+  border-left-color: var(--primary-color) !important;
+}
+
+.inner-scrollbar {
+  scrollbar-width: 8px;
+  scrollbar-color: var(--primary-color) transparent;
+}

@@ -1,0 +1,39 @@
+
+import { cookies } from "next/headers";
+import {decrypt} from "@/lib/session";
+import LoginForm from "@/components/login-form";
+import AdminConsole from "@/components/admin-console";
+import { db } from "@/db";
+import { AdminCredentials, CustomMessage, OrderItems, Orders } from "@/db/schema";
+import AdminNav from "@/components/admin-nav";
+import { desc, eq } from "drizzle-orm";
+
+
+
+export default async function AdminPortal() {
+    const cookie = (await cookies()).get('session')?.value;
+    let sessionInfo = await decrypt(cookie);
+    let currentUser = sessionInfo?.username as string;
+    const customMessage = await db.select().from(CustomMessage);
+    const users = await db.select().from(AdminCredentials);
+    const orders = await db.select().from(Orders).orderBy(desc(Orders.createdAt)).limit(10);
+
+
+  return (
+    <div className="w-full px-6 max-h-screen flex flex-col gap-10">
+<h1 className="text-3xl md:text-5xl font-bold text-center w-full border-b-10 
+        border-double rounded-3xl border-(--primary-color) pb-5 shadow-xl shadow-slate-600/50">
+          Business Admin Portal
+        </h1>
+        <AdminNav />
+        {currentUser ?
+         <AdminConsole 
+            currentUser={currentUser} 
+            customMessage={customMessage[0]?.message || "No custom message set"}
+            users={users}
+            orders={orders}
+         /> 
+         : <LoginForm />}
+    </div>
+    );
+}

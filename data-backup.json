@@ -1,0 +1,50 @@
+{
+  "products": [
+    {
+      "name": "PokeBall",
+      "description": "This is a sample product. The description can be up to 255 characters long.",
+      "price": 4.99,
+      "photo": "Pokeball_fmgrcd",
+      "count": 20
+    },
+    {
+      "name": "Great Ball",
+      "description": "This is a sample product. The description can be up to 255 characters long.",
+      "price": 9.99,
+      "photo": "greatball_jtmpse",
+      "count": 10
+    },
+    {
+      "name": "Master Ball",
+      "description": "This is a sample product. The description can be up to 255 characters long.",
+      "price": 19.99,
+      "photo": "Masterball_m281tz",
+      "count": 5
+    },
+    {
+      "name": "Ultra Ball",
+      "description": "This is a sample product. The description can be up to 255 characters long. This product will be marked sold out for display purposes.",
+      "price": 14.99,
+      "photo": "ultraball_av6dlb",
+      "count": 0
+    },
+    {
+      "name": "Luxury Ball",
+      "description": "This is a sample product. The description can be up to 255 characters long.",
+      "price": 16.99,
+      "photo": "hf1sq1u8uqsrsv31n1sn",
+      "count": 12
+    }
+  ],
+  "adminCredentials": [
+    {
+      "username": "Admin",
+      "passwordHash": "$2b$10$7QTYzzlld6e0zd7viLNpEOCYofzwyb8Z4cfcs/TwrNE4.b/Ye5Y7e"
+    }
+  ],
+  "customMessages": [
+    {
+      "message": "This is a custom message that can be changed in the admin-portal at anytime!"
+    }
+  ]
+}
