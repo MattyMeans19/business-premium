@@ -16,7 +16,7 @@ interface Order {
 }
 
 interface Items {
-    name: string,
+    productName: string,
     quantity: number
 }
 
@@ -27,7 +27,7 @@ export default function AdminOrders({ orders }: { orders: Order[] }) {
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | null } | null>(null);
 
   useEffect(() =>{
-    if(selectedOrder !== null){
+    if(selectedOrder !== null && orderItems === null){
         GetItems(selectedOrder.id)
     }
   }, )
@@ -158,16 +158,14 @@ export default function AdminOrders({ orders }: { orders: Order[] }) {
 
               <div className="bg-gray-50 rounded-lg p-4 border mb-6">
                 <h4 className="font-bold mb-3 border-b pb-2">Financial Summary</h4>
-                <div className="space-y-2 text-sm">
-                    <div>
-                        <span>Items</span>
-                        {orderItems?.map((item, index) =>(
-                            <div key={index}>
-                                <p>{item.name}</p>
-                                <p>{item.quantity}</p>
-                            </div>
-                        ))}
+                <span className="font-bold underline">Items</span>
+                {orderItems?.map((item, index) =>(
+                    <div key={index} className="grid grid-cols-2">
+                        <p className="col-span-1 font-bold">{item.productName}</p>
+                        <p className="col-span-1"><strong>Quantity: </strong>{item.quantity}</p>
                     </div>
+                ))}
+                <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
                     <span>${selectedOrder.subtotal.toFixed(2)}</span>

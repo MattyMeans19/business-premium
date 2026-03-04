@@ -2,6 +2,7 @@
 import { Logout, updateMessage, UpdateUserPassword } from "@/app/(admin)/actions";
 import { useState, useEffect } from "react";
 import AdminOrders from "./admin-orders";
+import AdminNav from "./admin-nav";
 
 interface Order {
   id: number;
@@ -66,6 +67,7 @@ export default function AdminConsole({ currentUser, customMessage, users, orders
 
     return (
         <div className="w-full h-full md:px-6 py-2 max-h-screen flex flex-col gap-10 relative">
+            <AdminNav />
             <span className="text-center text-3xl font-medium">
                 Welcome back, {currentUser}!
             </span>

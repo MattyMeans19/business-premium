@@ -5,10 +5,10 @@ import LoginForm from "@/components/login-form";
 import AdminConsole from "@/components/admin-console";
 import { db } from "@/db";
 import { AdminCredentials, CustomMessage, OrderItems, Orders } from "@/db/schema";
-import AdminNav from "@/components/admin-nav";
-import { desc, eq } from "drizzle-orm";
+import { desc } from "drizzle-orm";
 
-
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function AdminPortal() {
     const cookie = (await cookies()).get('session')?.value;
@@ -25,7 +25,6 @@ export default async function AdminPortal() {
         border-double rounded-3xl border-(--primary-color) pb-5 shadow-xl shadow-slate-600/50">
           Business Admin Portal
         </h1>
-        <AdminNav />
         {currentUser ?
          <AdminConsole 
             currentUser={currentUser} 

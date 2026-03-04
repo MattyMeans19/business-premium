@@ -4,7 +4,10 @@ import {db} from "@/db";
 import { eq } from "drizzle-orm";
 import { AdminCredentials, CustomMessage, products, Orders, OrderItems } from "@/db/schema";
 import bcrypt from "bcrypt";
-import {createSession, deleteSession} from "@/lib/session";
+import {createSession} from "@/lib/session";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export async function login(prevState: any, formData: FormData) {
     const username = formData.get("username") as string;
@@ -42,9 +45,24 @@ export async function login(prevState: any, formData: FormData) {
     }
 }
 
-export async function Logout(){
-    await deleteSession();
-    return { success: true, message: "Logged out successfully." };
+export async function Logout() {
+  const cookieStore = await cookies();
+  
+  // 1. Delete the cookie
+  cookieStore.delete('session');
+
+  // 2. Force an expiration (Backup for some browser behaviors)
+ cookieStore.set('session', '', { 
+    expires: new Date(0), 
+    path: '/admin-portal', // Ensure this matches the path the cookie was created on
+  });
+
+  // 3. Clear the Next.js Client Router Cache
+  // This is the most likely culprit for "logging back in" on refresh
+  revalidatePath('/admin-portal', 'layout');
+
+  // 4. Redirect
+  redirect("/admin-portal");
 }
 
 export async function updateMessage(newMessage: string) {
@@ -116,7 +134,7 @@ export async function MarkOrderFulfilled(orderId: number) {
 }
 
 export async function GetOrderItems(orderId: number){
-    const response = await db.select().from(OrderItems).where(eq(Orders.id, orderId));
+    const response = await db.select().from(OrderItems).where(eq(OrderItems.orderId, orderId));
     if(response.length > 0){
         return {success: true, items: response as any[]}
     } else {

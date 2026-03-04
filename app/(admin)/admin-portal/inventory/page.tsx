@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { products } from "@/db/schema";
 import { asc } from "drizzle-orm";
 
+
 export default async function InventoryPage() {
   const inventory = await db.select().from(products).orderBy(asc(products.id));
 

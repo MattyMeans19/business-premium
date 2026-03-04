@@ -18,12 +18,13 @@ export default function AdminNav() {
       >
         Inventory
       </Link>
-      <button
-        className="px-4 py-2 bg-(--primary-color)/80 hover:bg-(--primary-color) text-white rounded"
-        onClick={() => Logout()}
-      >
-        Logout
-      </button>
+      <form action={Logout}>
+        <button
+          className="px-4 py-2 bg-(--primary-color)/80 hover:bg-(--primary-color) text-white rounded"
+        >
+          Logout
+        </button>
+      </form>
     </nav>
   );
 }
