@@ -4,7 +4,7 @@ import {decrypt} from "@/lib/session";
 import LoginForm from "@/components/login-form";
 import AdminConsole from "@/components/admin-console";
 import { db } from "@/db";
-import { AdminCredentials, CustomMessage, OrderItems, Orders } from "@/db/schema";
+import { AdminCredentials, CustomMessage, Orders } from "@/db/schema";
 import { desc } from "drizzle-orm";
 
 export const dynamic = 'force-dynamic';

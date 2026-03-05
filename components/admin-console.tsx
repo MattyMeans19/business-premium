@@ -1,5 +1,5 @@
 "use client"
-import { Logout, updateMessage, UpdateUserPassword } from "@/app/(admin)/actions";
+import { updateMessage, UpdateUserPassword } from "@/app/(admin)/actions";
 import { useState, useEffect } from "react";
 import AdminOrders from "./admin-orders";
 import AdminNav from "./admin-nav";
