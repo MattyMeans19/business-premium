@@ -17,6 +17,8 @@ export default async function AdminPortal() {
     const customMessage = await db.select().from(CustomMessage);
     const users = await db.select().from(AdminCredentials);
     const orders = await db.select().from(Orders).orderBy(desc(Orders.createdAt)).limit(10);
+    const userLimit = parseInt(process.env.USER_LIMIT!);
+
 
 
   return (
@@ -30,6 +32,7 @@ export default async function AdminPortal() {
             currentUser={currentUser} 
             customMessage={customMessage[0]?.message || "No custom message set"}
             users={users}
+            userLimit={userLimit}
             orders={orders}
          /> 
          : <LoginForm />}

@@ -69,13 +69,13 @@ export default function AdminOrders({ orders }: { orders: Order[] }) {
     }
 
   return (
-    <div className="ConsoleBox col-span-full">
+    <div className="ConsoleBox mb-5 col-span-full">
       <h2 className="text-2xl text-center mb-4 font-bold">Recent Orders</h2>
       
       {localOrders.length === 0 ? (
         <p className="text-center text-gray-500 py-8">No orders</p>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto overflow-y-scroll inner-scrollbar grow">
           <table className="w-full text-sm">
             <thead className="border-b bg-gray-50">
               <tr>

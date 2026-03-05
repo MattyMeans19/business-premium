@@ -16,7 +16,7 @@ export default function AdminInventory({ inventory }: AdminInventoryProps) {
   return (
     <div className="w-full h-full md:px-6 py-2 max-h-screen flex flex-col gap-10 relative">
         <AdminNav />
-        <div className="ConsoleBox col-span-full max-h-fit overflow-y-clip">
+        <div className="ConsoleBox h-full col-span-full max-h-fit overflow-y-clip">
         <button
             className="bg-(--primary-color)/75 hover:bg-(--primary-color) text-white px-4 py-2 rounded-md w-full self-center"
             onClick={() => setAddInventory(true)}

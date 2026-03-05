@@ -95,6 +95,17 @@ export async function UpdateUserPassword(userId: number, newPassword: string) {
     
 }
 
+export async function AddNewUser(username: string, password: string){
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const response = await db.insert(AdminCredentials).values({username: username, passwordHash: hashedPassword});
+
+    if(response.rowCount != null && response.rowCount <= parseInt(process.env.USER_LIMIT!)){
+        return {success: true, message: "New User successfully added!"}
+    } else{
+        return {success: false, message: "Error creating user. Make sure the username is not already in use, or contact the web admin!"}
+    }
+}
+
 export async function DeleteInventoryItem(itemId: number) {
     const response = await db.delete(products).where(eq(products.id, itemId));
     const newList = await db.select().from(products);

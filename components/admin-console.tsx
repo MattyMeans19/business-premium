@@ -3,6 +3,7 @@ import { Logout, updateMessage, UpdateUserPassword } from "@/app/(admin)/actions
 import { useState, useEffect } from "react";
 import AdminOrders from "./admin-orders";
 import AdminNav from "./admin-nav";
+import AddUser from "./add-user";
 
 interface Order {
   id: number;
@@ -20,12 +21,14 @@ interface AdminConsoleProps {
     currentUser: string;
     customMessage: string;
     users: any[];
+    userLimit: number;
     orders: Order[];
 }
-export default function AdminConsole({ currentUser, customMessage, users, orders }: AdminConsoleProps) {
+export default function AdminConsole({ currentUser, customMessage, users, orders, userLimit }: AdminConsoleProps) {
     const [alertMessage, setAlertMessage] = useState("");
     const [alert, setAlert] = useState(false);
     const [alertColor, setAlertColor] = useState("green");
+    const [addingUser, ToggleAddingUser] = useState(false);
 
     useEffect(() => {
         if (alertMessage) {
@@ -33,9 +36,6 @@ export default function AdminConsole({ currentUser, customMessage, users, orders
             const timer = setTimeout(() => {
                 setAlert(false);
             }, 3000);
-            setTimeout(() => {
-                window.location.reload();
-            }, 3500);
             return () => clearTimeout(timer);
         }
     }, [alertMessage]);
@@ -65,6 +65,32 @@ export default function AdminConsole({ currentUser, customMessage, users, orders
         }
     }
 
+    async function handleAddUser(){
+        if(users.length === userLimit){
+            setAlertMessage("User limit is reached. Contact your web admin for upgrade options!")
+            setAlertColor("red")
+        } else if(users.length < userLimit){
+            ToggleAddingUser(true);
+        }
+    }
+
+    function childAlert(message: string, color: string){
+        setAlertMessage(message);
+        setAlertColor(color)
+    }
+
+    function HideUserModal(success: boolean){
+        if(success){
+            ToggleAddingUser(false);
+            setTimeout(() => {
+                window.location.reload()
+            }, 3000);
+        } else{
+            ToggleAddingUser(false)
+        }
+        
+    }
+
     return (
         <div className="w-full h-full md:px-6 py-2 max-h-screen flex flex-col gap-10 relative">
             <AdminNav />
@@ -75,7 +101,7 @@ export default function AdminConsole({ currentUser, customMessage, users, orders
             <div className="grow w-full md:px-6 flex flex-col md:grid grid-cols-4 gap-10">
             <div className="ConsoleBox ">
                 <h2 className="text-2xl text-center">Custom Message</h2>
-                    <p className="text-center text-3xl"><strong className="text-purple-500">Current Message:</strong> {customMessage}</p>
+                    <p className="text-center md:text-3xl"><strong className="text-purple-500">Current Message:</strong> {customMessage}</p>
                     <textarea className="w-full h-24 p-2 border border-gray-300 rounded-md mt-4 grow" placeholder="Enter new custom message..."></textarea>
                     <button className="mt-2 bg-(--primary-color)/75 hover:bg-(--primary-color) text-white px-4 py-2 rounded-md"
                     onClick={() => {
@@ -86,10 +112,18 @@ export default function AdminConsole({ currentUser, customMessage, users, orders
                     </button>
             </div>
             <div className="ConsoleBox">
-                <h2 className="text-2xl text-center">User Management</h2>
-                <div className="grow">
+                <div className="border-b pb-2 border-(--primary-color) flex flex-nowrap justify-between">
+                    <p><strong>Users: </strong> {users.length}/{userLimit}</p>
+                    <h2 className="text-2xl text-center font-bold">User Management</h2>
+                    <button className="text-center bg-(--primary-color) active:bg-(--secondary-color)
+                     text-white px-3 rounded-2xl"
+                     onClick={() => (handleAddUser())}>
+                        Add User
+                    </button>   
+                </div>
+                <div className="overflow-y-scroll inner-scrollbar">
                     {users.map((user) => (
-                        <div key={user.id} className="h-full flex flex-col items-center gap-15 border-gray-300 rounded-md p-4 m-4">
+                        <div key={user.id} className="h-fit flex flex-col items-center gap-15 border-gray-300 rounded-md p-4 m-4">
                             <p className="text-center text-xl basis-1/3 md:max-h-fit"><strong>User Name: </strong> {user.username}</p>
                             <div className="flex flex-nowrap justify-around w-full">
                                 <label htmlFor="newPassword" className="text-center text-lg basis-1/3 md:max-h-fit">New Password:</label>
@@ -115,7 +149,7 @@ export default function AdminConsole({ currentUser, customMessage, users, orders
                 {alertMessage}
             </div>
         )}
-
+        {addingUser && <AddUser setAlert={childAlert} hideModal={HideUserModal}/>}
     </div>
     );
 }
