@@ -1,6 +1,8 @@
-import { integer, pgTableCreator, varchar, text, doublePrecision, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgTableCreator, varchar, text, doublePrecision, timestamp, pgEnum } from "drizzle-orm/pg-core";
 
 export const pgTable = pgTableCreator((name) => `business_premium_${name}`);
+export const roleEnum = pgEnum('user_role', ['Employee', 'Manager', 'Admin']);
+export type Role = (typeof roleEnum.enumValues)[number];
 
 export const products = pgTable("products", {
     id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
@@ -15,11 +17,14 @@ export const AdminCredentials = pgTable("admin_credentials", {
     id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
     username: varchar("username", { length: 255 }).notNull().unique(),
     passwordHash: varchar("password_hash", { length: 255 }).notNull(),
+    userRole: roleEnum('user_role').default('Employee').notNull(),
+
 });
 
 export const CustomMessage = pgTable("custom_message", {
     id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
     message: text("message").notNull(),
+    userRole: roleEnum('user_role').default('Employee').notNull(),
 });
 
 export const Orders = pgTable("orders", {

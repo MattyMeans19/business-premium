@@ -95,14 +95,33 @@ export async function UpdateUserPassword(userId: number, newPassword: string) {
     
 }
 
-export async function AddNewUser(username: string, password: string){
+export async function DeleteUser(username: string){
+    const deleteRequest = await db.delete(AdminCredentials).where(eq(AdminCredentials.username, username));
+    if(deleteRequest.rowCount! > 0){
+        return {success: true, message: "User Deleted!"}
+    } else {
+        return {success: false, message: "Error deleting user!"}
+    }
+}
+
+export async function AddNewUser(username: string, password: string, role: any){
     const hashedPassword = await bcrypt.hash(password, 10);
-    const response = await db.insert(AdminCredentials).values({username: username, passwordHash: hashedPassword});
+    const response = await db.insert(AdminCredentials).values({username: username, passwordHash: hashedPassword, userRole: role});
 
     if(response.rowCount != null && response.rowCount <= parseInt(process.env.USER_LIMIT!)){
         return {success: true, message: "New User successfully added!"}
     } else{
         return {success: false, message: "Error creating user. Make sure the username is not already in use, or contact the web admin!"}
+    }
+}
+
+export async function GetUserRole(username: string){
+    const roleRequest = await db.select().from(AdminCredentials).where(eq(AdminCredentials.username, username));
+
+    if(roleRequest.length != 0){
+        return roleRequest[0].userRole
+    } else {
+        return "";
     }
 }
 

@@ -73,7 +73,7 @@
   }
 
   .ConsoleBox{
-    @apply shadow-lg shadow-slate-400/75 h-[50vh] flex flex-col border-10 border-double border-(--secondary-color)/35 rounded-lg p-4 gap-10 col-span-2;
+    @apply shadow-lg shadow-slate-400/75 h-[70vh] flex flex-col border-10 border-double border-(--secondary-color)/35 rounded-lg p-4 gap-10 col-span-2;
   }
 }
 
