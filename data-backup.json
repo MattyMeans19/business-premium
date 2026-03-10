@@ -39,7 +39,8 @@
   "adminCredentials": [
     {
       "username": "Admin",
-      "passwordHash": "$2b$10$7QTYzzlld6e0zd7viLNpEOCYofzwyb8Z4cfcs/TwrNE4.b/Ye5Y7e"
+      "passwordHash": "$2b$10$7QTYzzlld6e0zd7viLNpEOCYofzwyb8Z4cfcs/TwrNE4.b/Ye5Y7e",
+      "userRole": "Admin"
     }
   ],
   "customMessages": [
