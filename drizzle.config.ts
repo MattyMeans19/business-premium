@@ -9,7 +9,7 @@ export default defineConfig({
   dialect: "postgresql",
   // 4. Connection details (reads from your .env file)
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
+    url: process.env.DATABASE_URL! + "?sslmode=no-verify",
   },
   tablesFilter: ['business_premium_*']
 });

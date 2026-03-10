@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Add this line to silence the error
+  turbopack: {}, 
+  
   webpack: (config, { dev }) => {
     if (dev) {
       config.watchOptions = {

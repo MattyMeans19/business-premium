@@ -6,6 +6,9 @@ import Footer from "@/components/footer";
 import PageLoader from "@/components/page-loader";
 import { CartProvider } from "@/lib/cart-context";
 
+export const dynamic = 'force-dynamic';
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
