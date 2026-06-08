@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:push": "npx drizzle-kit push"
+    "db:push": "NODE_OPTIONS='--dns-result-order=ipv4first' npx drizzle-kit push"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^5.6.1",
